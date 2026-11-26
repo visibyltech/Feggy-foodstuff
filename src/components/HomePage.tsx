@@ -1,8 +1,6 @@
-import { useMemo } from 'react';
-import { ArrowRight, CalendarCheck, CheckCircle2, Clock, RefreshCw, ShieldCheck } from 'lucide-react';
-import {
-  CATEGORY_LABELS,
-} from '../data/catalog';
+import { useMemo, useState } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { CATEGORY_LABELS } from '../data/catalog';
 import type {
   Product,
   ProductCategory,
@@ -43,6 +41,39 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
     return (featured.length >= 8 ? featured : activeProducts).slice(0, 8);
   }, [activeProducts]);
 
+  const [heroIndex, setHeroIndex] = useState(0);
+  const [featureIndex, setFeatureIndex] = useState(0);
+
+  const featureMessages = [
+    { title: 'Wide Assortment', subtitle: 'Everyday Nigerian foodstuffs and pantry essentials' },
+    { title: 'Pay Small Small', subtitle: 'Start from ₦500 daily or ₦5,000 weekly' },
+    { title: 'Shop with Confidence', subtitle: 'Secure payments and convenient delivery' },
+  ];
+
+  const heroSlides = [
+    {
+      image: 'https://www.grocedy.com/static/media/gifts-2.092f6ad3635cd53c8b6b.jpg',
+      alt: 'Real photograph of a Nigerian grocery foodstuff bundle with rice, garri, beans and cooking oil',
+      eyebrow: 'FEGGY FOODSTUFF · EASY BUY FOODSTUFF',
+      title: 'Everything your kitchen needs, all in one place',
+      subtitle: 'Shop everyday food essentials and selected family bundles.',
+    },
+    {
+      image: 'https://haskefoods.com/cdn/shop/files/african-foodstuffs-christmas-gift-hamper-in-a-rectangular-basket_c647e462-eb15-47ac-be31-d58e2bc08c85.png?v=1770659656',
+      alt: 'Real photograph of an African foodstuff hamper with rice, palm oil and pantry staples',
+      eyebrow: 'FOOD BUNDLES FOR EVERY HOME',
+      title: 'Choose a bundle that works for your family',
+      subtitle: 'Explore carefully selected foodstuff combinations for your home.',
+    },
+    {
+      image: 'https://res.cloudinary.com/duxaaaejl/image/upload/v1756114128/lcirrfv9umw6qzusioow.png',
+      alt: 'Real photograph of Nigerian rice, cooking oil, beans, garri and packaged pantry essentials',
+      eyebrow: 'BUY NOW OR PAY SMALL SMALL',
+      title: 'Stock your kitchen at your own pace',
+      subtitle: 'Shop foodstuffs and choose the payment option that suits you.',
+    },
+  ];
+
   const alignedCategories = useMemo(() => {
     return ORDERED_CATEGORIES.map((cat) => {
       const items = activeProducts.filter((p) => p.category === cat);
@@ -57,60 +88,93 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
 
   return (
     <div className="bg-white">
-      {/* Hero Section: Pay Small Small Focal Point */}
-      <section className="bg-gradient-to-b from-green-50/80 via-white to-white border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 lg:py-20">
-          {/* Hero Left */}
-          <div className="max-w-4xl mx-auto flex flex-col items-center text-center space-y-6">
-            <div className="text-xs font-semibold text-orange-700 tracking-wide uppercase">
-              Easy Buy Foodstuff · Pay Small Small
+      {/* Supermarket-style hero: assurance strip + photographic campaign slider */}
+      <section className="bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between gap-3 py-4 sm:py-5 border-b border-slate-100">
+            <button
+              type="button"
+              onClick={() => setFeatureIndex((i) => (i + featureMessages.length - 1) % featureMessages.length)}
+              aria-label="Previous store highlight"
+              className="text-slate-400 hover:text-green-800 p-1"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div className="flex items-center justify-center gap-4 sm:gap-6 min-w-0">
+              <div className="hidden sm:flex items-center justify-center w-12 h-12 text-green-800">
+                <span className="text-4xl">▣</span>
+              </div>
+              <div className="text-center sm:text-left min-w-0">
+                <h2 className="font-bold text-slate-900 text-base sm:text-lg">{featureMessages[featureIndex].title}</h2>
+                <p className="text-slate-600 text-sm sm:text-base">{featureMessages[featureIndex].subtitle}</p>
+              </div>
             </div>
+            <button
+              type="button"
+              onClick={() => setFeatureIndex((i) => (i + 1) % featureMessages.length)}
+              aria-label="Next store highlight"
+              className="text-slate-600 hover:text-green-800 p-1"
+            >
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl font-bold text-[#0B2545] tracking-tight leading-[1.1] text-balance max-w-2xl">
-              Stock your Nigerian kitchen and pay small small at your pace.
-            </h1>
-
-            <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
-              Lock today&apos;s foodstuff prices on rice, beans, garri, palm oil, yams, and family
-              bundles. Contribute from <span className="font-semibold text-green-800">₦500 daily</span>{' '}
-              or <span className="font-semibold text-green-800">₦5,000 weekly</span> via Paystack, or
-              buy in full with optional monthly delivery.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+          <div className="relative mt-0 sm:mt-5 overflow-hidden bg-green-950 sm:rounded-2xl">
+            <div className="relative aspect-[1/1.02] sm:aspect-[16/7] lg:aspect-[16/6]">
+              <img
+                src={heroSlides[heroIndex].image}
+                alt={heroSlides[heroIndex].alt}
+                className="absolute inset-0 w-full h-full object-cover"
+                fetchPriority="high"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/5" />
+              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8 lg:p-12 text-white">
+                <p className="text-xs sm:text-sm font-bold tracking-[0.16em] uppercase text-orange-200 mb-2">
+                  {heroSlides[heroIndex].eyebrow}
+                </p>
+                <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight max-w-2xl">
+                  {heroSlides[heroIndex].title}
+                </h1>
+                <p className="text-sm sm:text-base text-white/90 mt-2 max-w-xl">
+                  {heroSlides[heroIndex].subtitle}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => navigate({ view: 'shop', category: 'all' })}
+                  className="mt-4 inline-flex items-center gap-2 rounded-lg bg-orange-600 hover:bg-orange-700 px-5 py-3 text-sm font-semibold text-white transition-colors"
+                >
+                  Shop Foodstuffs <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
               <button
                 type="button"
-                onClick={() => navigate({ view: 'pay-small-small' })}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-orange-600 text-white text-sm font-semibold hover:bg-orange-700 transition-colors whitespace-nowrap"
+                onClick={() => setHeroIndex((i) => (i + heroSlides.length - 1) % heroSlides.length)}
+                aria-label="Previous promotion"
+                className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 hover:bg-white text-slate-900 p-2 shadow"
               >
-                <span>Start Pay Small Small</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowLeft className="w-5 h-5" />
               </button>
               <button
                 type="button"
-                onClick={() => navigate({ view: 'shop', category: 'all' })}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-green-700 text-green-800 text-sm font-semibold hover:bg-green-50 transition-colors whitespace-nowrap"
+                onClick={() => setHeroIndex((i) => (i + 1) % heroSlides.length)}
+                aria-label="Next promotion"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 hover:bg-white text-slate-900 p-2 shadow"
               >
-                Browse Foodstuffs
+                <ArrowRight className="w-5 h-5" />
               </button>
-            </div>
-
-            <div className="pt-6 grid grid-cols-3 gap-4 border-t border-slate-200/80 max-w-lg w-full text-left">
-              <div>
-                <p className="font-display text-xl font-bold text-green-800 tabular-nums">₦500+</p>
-                <p className="text-xs text-slate-500 mt-0.5">Daily minimum</p>
-              </div>
-              <div>
-                <p className="font-display text-xl font-bold text-green-800 tabular-nums">₦5,000+</p>
-                <p className="text-xs text-slate-500 mt-0.5">Weekly minimum</p>
-              </div>
-              <div>
-                <p className="font-display text-xl font-bold text-orange-600">Paystack</p>
-                <p className="text-xs text-slate-500 mt-0.5">Verified receipts</p>
+              <div className="absolute top-4 right-4 flex gap-1.5">
+                {heroSlides.map((slide, i) => (
+                  <button
+                    key={slide.title}
+                    type="button"
+                    aria-label={`Show promotion ${i + 1}`}
+                    onClick={() => setHeroIndex(i)}
+                    className={`h-2 rounded-full transition-all ${i === heroIndex ? 'w-7 bg-white' : 'w-2 bg-white/60'}`}
+                  />
+                ))}
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
