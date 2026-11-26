@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -21,7 +21,7 @@ export function AuthModal({ onClose, onGoogleSignIn }: AuthModalProps) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
 
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setMessage('');
     setBusy(true);
