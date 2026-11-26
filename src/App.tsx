@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { onAuthStateChanged, signInWithPopup, signOut, type User } from 'firebase/auth';
 import { AdminDashboard } from './components/AdminDashboard';
+import { AuthModal } from './components/AuthModal';
 import { CartCheckoutPage } from './components/CartCheckoutPage';
 import { CustomerDashboard } from './components/CustomerDashboard';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -66,6 +67,7 @@ function AppShell() {
 
   const [user, setUser] = useState<User | null>(null);
   const [authReady, setAuthReady] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [firestoreProducts, setFirestoreProducts] = useState<Product[]>([]);
 
@@ -296,12 +298,12 @@ function AppShell() {
   }, [authReady, user, products, userPlans, userSubscriptions]);
 
   const handleSignIn = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      showToast('Signed in to FEGGY FOODSTUFF.', 'success');
-    } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Google Sign-In failed.', 'error');
-    }
+    setAuthModalOpen(true);
+  };
+
+  const handleGoogleSignIn = async () => {
+    await signInWithPopup(auth, googleProvider);
+    showToast('Signed in to FEGGY FOODSTUFF.', 'success');
   };
 
   const handleSignOut = async () => {
@@ -472,6 +474,9 @@ function AppShell() {
         )}
       </main>
 
+      {authModalOpen && (
+        <AuthModal onClose={() => setAuthModalOpen(false)} onGoogleSignIn={handleGoogleSignIn} />
+      )}
       <Footer navigate={navigate} />
       <ReceiptModal payment={receiptPayment} onClose={() => setReceiptPayment(null)} />
     </div>
