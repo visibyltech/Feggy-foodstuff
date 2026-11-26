@@ -224,7 +224,7 @@ export function Navbar({
                 }}
                 className="w-full px-4 py-2.5 rounded-lg bg-green-700 text-white text-sm font-semibold"
               >
-                Sign In with Google
+                Sign In / Create Account
               </button>
             )}
           </div>
