@@ -1,14 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { ArrowRight, CalendarCheck, CheckCircle2, Clock, RefreshCw, ShieldCheck } from 'lucide-react';
 import {
   CATEGORY_LABELS,
-  computePlanSchedule,
-  formatNgn,
-  formatReadableDate,
-  getPresetAmounts,
 } from '../data/catalog';
 import type {
-  InstallmentFrequency,
   Product,
   ProductCategory,
   ProductVariant,
@@ -60,48 +55,13 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
     }).filter((entry) => entry.count > 0);
   }, [activeProducts]);
 
-  const calcProducts = activeProducts;
-  const [calcProductId, setCalcProductId] = useState<string>(
-    calcProducts[0]?.id || 'sm-bundle-family-pantry'
-  );
-  const selectedProduct =
-    calcProducts.find((p) => p.id === calcProductId) || calcProducts[0];
-  const [calcVariantIdx, setCalcVariantIdx] = useState(0);
-  const selectedVariant =
-    selectedProduct?.variants[calcVariantIdx] || selectedProduct?.variants[0];
-
-  const [frequency, setFrequency] = useState<InstallmentFrequency>('daily');
-  const [customAmount, setCustomAmount] = useState<number>(1000);
-
-  const presets = selectedVariant
-    ? getPresetAmounts(frequency, selectedVariant.priceNgn)
-    : [500, 1000, 2000];
-
-  const effectiveAmount = Math.max(
-    frequency === 'daily' ? 500 : frequency === 'weekly' ? 5000 : 1000,
-    customAmount
-  );
-
-  const schedule = selectedVariant
-    ? computePlanSchedule(selectedVariant.priceNgn, frequency, effectiveAmount)
-    : null;
-
-  const handleFrequencyChange = (nextFreq: InstallmentFrequency) => {
-    setFrequency(nextFreq);
-    if (nextFreq === 'daily') setCustomAmount(1000);
-    else if (nextFreq === 'weekly') setCustomAmount(5000);
-    else if (selectedVariant) {
-      setCustomAmount(Math.max(1000, Math.ceil(selectedVariant.priceNgn / 3 / 500) * 500));
-    }
-  };
-
   return (
     <div className="bg-white">
       {/* Hero Section: Pay Small Small Focal Point */}
       <section className="bg-gradient-to-b from-green-50/80 via-white to-white border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 lg:py-20">
           {/* Hero Left */}
-          <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
+          <div className="max-w-4xl mx-auto flex flex-col items-center text-center space-y-6">
             <div className="text-xs font-semibold text-orange-700 tracking-wide uppercase">
               Easy Buy Foodstuff · Pay Small Small
             </div>
@@ -110,14 +70,14 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
               Stock your Nigerian kitchen and pay small small at your pace.
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
               Lock today&apos;s foodstuff prices on rice, beans, garri, palm oil, yams, and family
               bundles. Contribute from <span className="font-semibold text-green-800">₦500 daily</span>{' '}
               or <span className="font-semibold text-green-800">₦5,000 weekly</span> via Paystack, or
               buy in full with optional monthly delivery.
             </p>
 
-            <div className="flex flex-wrap items-center gap-3 pt-1">
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
               <button
                 type="button"
                 onClick={() => navigate({ view: 'pay-small-small' })}
@@ -135,7 +95,7 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
               </button>
             </div>
 
-            <div className="pt-4 grid grid-cols-3 gap-4 border-t border-slate-200/80 max-w-lg">
+            <div className="pt-6 grid grid-cols-3 gap-4 border-t border-slate-200/80 max-w-lg w-full text-left">
               <div>
                 <p className="font-display text-xl font-bold text-green-800 tabular-nums">₦500+</p>
                 <p className="text-xs text-slate-500 mt-0.5">Daily minimum</p>
@@ -151,148 +111,6 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
             </div>
           </div>
 
-          {/* Hero Right: Interactive Pay Small Small Calculator */}
-          <div className="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between gap-2 pb-4 border-b border-slate-100">
-                <div>
-                  <h2 className="font-display text-lg font-bold text-[#0B2545]">
-                    Pay Small Small Planner
-                  </h2>
-                  <p className="text-xs text-slate-500">Calculate your foodstuff contribution plan</p>
-                </div>
-                <span className="text-xs font-semibold text-green-800">0% Hidden Fees</span>
-              </div>
-
-              {selectedProduct && selectedVariant && schedule && (
-                <div className="mt-4 space-y-4">
-                  <div>
-                    <label
-                      htmlFor="hero-calc-product"
-                      className="block text-xs font-medium text-slate-700 mb-1"
-                    >
-                      1. Choose Foodstuff or Bundle
-                    </label>
-                    <select
-                      id="hero-calc-product"
-                      value={selectedProduct.id}
-                      onChange={(e) => {
-                        setCalcProductId(e.target.value);
-                        setCalcVariantIdx(0);
-                      }}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-green-700"
-                    >
-                      {calcProducts.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1.5">
-                    {selectedProduct.variants.map((v, idx) => (
-                      <button
-                        key={v.label}
-                        type="button"
-                        onClick={() => setCalcVariantIdx(idx)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                          idx === calcVariantIdx
-                            ? 'bg-green-800 text-white'
-                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                        }`}
-                      >
-                        {v.label} · {formatNgn(v.priceNgn)}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div>
-                    <span className="block text-xs font-medium text-slate-700 mb-1.5">
-                      2. Contribution Frequency
-                    </span>
-                    <div className="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-xl">
-                      {(['daily', 'weekly', 'monthly'] as const).map((freq) => (
-                        <button
-                          key={freq}
-                          type="button"
-                          onClick={() => handleFrequencyChange(freq)}
-                          className={`py-2 rounded-lg text-xs font-semibold capitalize transition-colors ${
-                            frequency === freq
-                              ? 'bg-white text-green-800 shadow-sm'
-                              : 'text-slate-600 hover:text-slate-900'
-                          }`}
-                        >
-                          {freq}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <span className="block text-xs font-medium text-slate-700 mb-1.5">
-                      3. Select Contribution Amount
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {presets.map((amt) => (
-                        <button
-                          key={amt}
-                          type="button"
-                          onClick={() => setCustomAmount(amt)}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold tabular-nums transition-colors ${
-                            effectiveAmount === amt
-                              ? 'bg-orange-600 text-white'
-                              : 'border border-slate-200 text-slate-700 hover:border-orange-500'
-                          }`}
-                        >
-                          {formatNgn(amt)}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="bg-green-50/80 border border-green-200 rounded-xl p-4 space-y-2 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-slate-600">Total Target Amount</span>
-                      <span className="font-bold text-slate-900 tabular-nums">
-                        {formatNgn(selectedVariant.priceNgn)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-600">Contribution ({frequency})</span>
-                      <span className="font-bold text-orange-700 tabular-nums">
-                        {formatNgn(schedule.installmentAmountNgn)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-600">Balance After Today&apos;s Payment</span>
-                      <span className="font-semibold text-slate-900 tabular-nums">
-                        {formatNgn(schedule.remainingAfterFirstNgn)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between pt-1 border-t border-green-200">
-                      <span className="text-slate-600">Expected Completion</span>
-                      <span className="font-semibold text-green-900 tabular-nums">
-                        {formatReadableDate(schedule.expectedCompletionDate)} ({schedule.totalInstallments}{' '}
-                        steps)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {selectedProduct && (
-              <button
-                type="button"
-                onClick={() => navigate({ view: 'product', productId: selectedProduct.id })}
-                className="mt-5 w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-green-700 text-white text-sm font-semibold hover:bg-green-800 transition-colors"
-              >
-                <span>Open Plan &amp; Pay First Installment</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            )}
-          </div>
         </div>
       </section>
 
