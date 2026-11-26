@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Package } from 'lucide-react';
 import { CATEGORY_LABELS } from '../data/catalog';
 import type {
   Product,
@@ -102,7 +102,7 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
             </button>
             <div className="flex items-center justify-center gap-4 sm:gap-6 min-w-0">
               <div className="hidden sm:flex items-center justify-center w-12 h-12 text-green-800">
-                <span className="text-4xl">▣</span>
+                <Package className="w-10 h-10" strokeWidth={1.7} />
               </div>
               <div className="text-center sm:text-left min-w-0">
                 <h2 className="font-bold text-slate-900 text-base sm:text-lg">{featureMessages[featureIndex].title}</h2>
