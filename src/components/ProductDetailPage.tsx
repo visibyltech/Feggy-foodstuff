@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import {
   ArrowLeft,
   CheckCircle2,
+  CalendarDays,
+  CreditCard,
   Clock,
   Lock,
   Minus,
   Plus,
   RefreshCw,
   ShoppingBag,
+  Wallet,
 } from 'lucide-react';
 import type { User } from 'firebase/auth';
 import {
@@ -336,7 +339,7 @@ export function ProductDetailPage({
                     key={v.label}
                     type="button"
                     onClick={() => setVariantIdx(idx)}
-                    className={`p-3 rounded-xl border text-left transition-colors ${
+                    className={`min-w-0 p-2 sm:p-3 rounded-xl border text-center sm:text-left transition-colors ${
                       idx === variantIdx
                         ? 'border-green-700 bg-green-50 text-green-950'
                         : 'border-slate-200 hover:border-slate-300'
@@ -354,7 +357,7 @@ export function ProductDetailPage({
               <span className="block text-xs font-semibold text-slate-700 mb-2">
                 Choose How You Want to Purchase
               </span>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                 <button
                   type="button"
                   onClick={() => setPurchaseMode('pay_small_small')}
@@ -364,7 +367,7 @@ export function ProductDetailPage({
                       : 'border-slate-200 hover:border-orange-300'
                   }`}
                 >
-                  <p className="text-xs font-bold text-orange-700">1. PAY SMALL SMALL</p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1.5 mb-1"><CalendarDays className="w-5 h-5 text-orange-700" /><p className="text-[10px] sm:text-xs font-bold text-orange-700 leading-tight">PAY SMALL SMALL</p></div>
                   <p className="text-xs text-slate-600 mt-0.5 tabular-nums">
                     From {formatNgn(product.minDailyNgn)}/day
                   </p>
@@ -379,7 +382,7 @@ export function ProductDetailPage({
                       : 'border-slate-200 hover:border-green-300'
                   }`}
                 >
-                  <p className="text-xs font-bold text-green-800">2. BUY NOW</p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1.5 mb-1"><CreditCard className="w-5 h-5 text-green-800" /><p className="text-[10px] sm:text-xs font-bold text-green-800 leading-tight">BUY NOW</p></div>
                   <p className="text-xs text-slate-600 mt-0.5 tabular-nums">
                     Full {formatNgn(activeVariant.priceNgn)}
                   </p>
@@ -394,7 +397,7 @@ export function ProductDetailPage({
                       : 'border-slate-200 bg-slate-50 hover:bg-slate-100'
                   }`}
                 >
-                  <p className="text-xs font-bold text-slate-700">BUY NOW PAY LATER</p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1.5 mb-1"><Wallet className="w-5 h-5 text-slate-600" /><p className="text-[10px] sm:text-xs font-bold text-slate-700 leading-tight">BUY NOW PAY LATER</p></div>
                   <p className="text-[11px] font-bold text-orange-700 uppercase mt-0.5">
                     COMING SOON
                   </p>
