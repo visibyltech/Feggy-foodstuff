@@ -57,8 +57,13 @@ export function Navbar({
               alt="FEGGY FOODSTUFF"
               className="w-9 h-9 object-contain shrink-0"
             />
-            <span className="font-display text-lg font-bold tracking-tight text-[#0B2545] whitespace-nowrap">
-              FEGGY FOODSTUFF
+            <span className="flex flex-col items-start leading-tight">
+              <span className="font-display text-lg font-bold tracking-tight text-[#0B2545] whitespace-nowrap">
+                FEGGY FOODSTUFF
+              </span>
+              <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-green-800 whitespace-nowrap">
+                Pay Small Small (Easybuy)
+              </span>
             </span>
           </button>
         </div>
