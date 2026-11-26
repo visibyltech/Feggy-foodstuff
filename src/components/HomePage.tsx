@@ -114,51 +114,6 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
         </div>
       </section>
 
-      {/* 4-Column Feature Strip */}
-      <section className="border-b border-slate-100 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="flex items-start gap-3">
-            <CalendarCheck className="w-5 h-5 text-green-700 shrink-0 mt-0.5" />
-            <div>
-              <h3 className="text-sm font-semibold text-slate-900">1. Pay Small Small</h3>
-              <p className="text-xs text-slate-600 mt-1">
-                Daily from ₦500, weekly from ₦5,000, or monthly packages with SMS &amp; email
-                reminders.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />
-            <div>
-              <h3 className="text-sm font-semibold text-slate-900">2. Buy Now (Instant)</h3>
-              <p className="text-xs text-slate-600 mt-1">
-                Pay in full via Paystack for immediate dispatch of single items or family bundles.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <RefreshCw className="w-5 h-5 text-green-700 shrink-0 mt-0.5" />
-            <div>
-              <h3 className="text-sm font-semibold text-slate-900">3. Monthly Subscriptions</h3>
-              <p className="text-xs text-slate-600 mt-1">
-                Opt into automatic monthly restocking for your food bundles during checkout.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <Clock className="w-5 h-5 text-slate-500 shrink-0 mt-0.5" />
-            <div>
-              <h3 className="text-sm font-semibold text-slate-900">
-                Buy Now Pay Later · Coming Soon
-              </h3>
-              <p className="text-xs text-slate-500 mt-1">
-                Credit-backed BNPL is under review and will be activated after official rollout.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Aligned Categories Showcase */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
