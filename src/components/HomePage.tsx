@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, Package } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { CATEGORY_LABELS } from '../data/catalog';
 import type {
   Product,
@@ -42,14 +42,6 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
   }, [activeProducts]);
 
   const [heroIndex, setHeroIndex] = useState(0);
-  const [featureIndex, setFeatureIndex] = useState(0);
-
-  const featureMessages = [
-    { title: 'Wide Assortment', subtitle: 'Everyday Nigerian foodstuffs and pantry essentials' },
-    { title: 'Pay Small Small', subtitle: 'Start from ₦500 daily or ₦5,000 weekly' },
-    { title: 'Shop with Confidence', subtitle: 'Secure payments and convenient delivery' },
-  ];
-
   const heroSlides = [
     {
       image: 'https://www.grocedy.com/static/media/gifts-2.092f6ad3635cd53c8b6b.jpg',
@@ -90,36 +82,8 @@ export function HomePage({ products, navigate, onQuickAddToCart }: HomePageProps
     <div className="bg-white">
       {/* Supermarket-style hero: assurance strip + photographic campaign slider */}
       <section className="bg-white border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between gap-3 py-4 sm:py-5 border-b border-slate-100">
-            <button
-              type="button"
-              onClick={() => setFeatureIndex((i) => (i + featureMessages.length - 1) % featureMessages.length)}
-              aria-label="Previous store highlight"
-              className="text-slate-400 hover:text-green-800 p-1"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            <div className="flex items-center justify-center gap-4 sm:gap-6 min-w-0">
-              <div className="hidden sm:flex items-center justify-center w-12 h-12 text-green-800">
-                <Package className="w-10 h-10" strokeWidth={1.7} />
-              </div>
-              <div className="text-center sm:text-left min-w-0">
-                <h2 className="font-bold text-slate-900 text-base sm:text-lg">{featureMessages[featureIndex].title}</h2>
-                <p className="text-slate-600 text-sm sm:text-base">{featureMessages[featureIndex].subtitle}</p>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => setFeatureIndex((i) => (i + 1) % featureMessages.length)}
-              aria-label="Next store highlight"
-              className="text-slate-600 hover:text-green-800 p-1"
-            >
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="relative mt-0 sm:mt-5 overflow-hidden bg-green-950 sm:rounded-2xl">
+        <div className="max-w-7xl mx-auto px-0 sm:px-6">
+          <div className="relative mt-0 overflow-hidden bg-green-950 sm:rounded-2xl">
             <div className="relative aspect-[1/1.02] sm:aspect-[16/7] lg:aspect-[16/6]">
               <img
                 src={heroSlides[heroIndex].image}
