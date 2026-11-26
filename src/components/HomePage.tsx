@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, Package } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Package } from 'lucide-react';
 import { CATEGORY_LABELS } from '../data/catalog';
 import type {
   Product,
