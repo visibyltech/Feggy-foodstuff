@@ -1,0 +1,727 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Nigerian foodstuff item or ready-made food bundle with quantity variants",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 140
+        },
+        "slug": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 160,
+          "pattern": "^[a-z0-9\\-]+$"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "rice",
+            "beans",
+            "garri",
+            "palm_oil",
+            "groundnut_oil",
+            "vegetable_oil",
+            "yam",
+            "onions",
+            "tomatoes",
+            "pasta_noodles",
+            "swallow_flour",
+            "meat_fish",
+            "spices_seasoning",
+            "bundles"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2000
+        },
+        "imageUrl": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 600
+        },
+        "isBundle": {
+          "type": "boolean"
+        },
+        "bundleItems": {
+          "type": "array",
+          "description": "List of included items when isBundle is true (max 15)"
+        },
+        "variants": {
+          "type": "array",
+          "description": "Quantity/weight pricing variants such as 5kg, 25kg, 50kg (max 10)"
+        },
+        "minPriceNgn": {
+          "type": "number"
+        },
+        "minDailyNgn": {
+          "type": "number"
+        },
+        "minWeeklyNgn": {
+          "type": "number"
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "slug",
+        "category",
+        "description",
+        "imageUrl",
+        "isBundle",
+        "variants",
+        "minPriceNgn",
+        "minDailyNgn",
+        "minWeeklyNgn",
+        "featured",
+        "active",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Customer private profile and reminder contact details",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "deliveryAddress": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "state": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "smsRemindersEnabled": {
+          "type": "boolean"
+        },
+        "emailRemindersEnabled": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "uid",
+        "email",
+        "displayName",
+        "smsRemindersEnabled",
+        "emailRemindersEnabled",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Authorized platform administrator record",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "super_admin"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "InstallmentPlan": {
+      "title": "InstallmentPlan",
+      "description": "Pay Small Small installment contribution plan for a product or bundle",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "customerName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "customerEmail": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "reminderPhone": {
+          "type": "string",
+          "minLength": 7,
+          "maxLength": 30
+        },
+        "productId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "productName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "variantLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "productImageUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "frequency": {
+          "type": "string",
+          "enum": ["daily", "weekly", "monthly"]
+        },
+        "installmentAmountNgn": {
+          "type": "number"
+        },
+        "totalTargetNgn": {
+          "type": "number"
+        },
+        "amountPaidNgn": {
+          "type": "number"
+        },
+        "outstandingBalanceNgn": {
+          "type": "number"
+        },
+        "contributionsCount": {
+          "type": "number"
+        },
+        "totalInstallments": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "completed", "ready_for_delivery", "delivered", "cancelled"]
+        },
+        "deliveryAddress": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 300
+        },
+        "nextDueDate": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "expectedCompletionDate": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "lastPaymentReference": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "customerName",
+        "customerEmail",
+        "reminderPhone",
+        "productId",
+        "productName",
+        "variantLabel",
+        "productImageUrl",
+        "frequency",
+        "installmentAmountNgn",
+        "totalTargetNgn",
+        "amountPaidNgn",
+        "outstandingBalanceNgn",
+        "contributionsCount",
+        "totalInstallments",
+        "status",
+        "deliveryAddress",
+        "nextDueDate",
+        "expectedCompletionDate",
+        "lastPaymentReference",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Paid customer order from Buy Now or completed Pay Small Small plan",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "customerName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "customerEmail": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "customerPhone": {
+          "type": "string",
+          "minLength": 7,
+          "maxLength": 30
+        },
+        "purchaseMode": {
+          "type": "string",
+          "enum": ["buy_now", "pay_small_small_completed", "subscription_renewal"]
+        },
+        "items": {
+          "type": "array",
+          "description": "Ordered food items and quantities (max 30)"
+        },
+        "totalAmountNgn": {
+          "type": "number"
+        },
+        "paystackReference": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 128
+        },
+        "paymentStatus": {
+          "type": "string",
+          "enum": ["paid"]
+        },
+        "deliveryStatus": {
+          "type": "string",
+          "enum": ["processing", "packed", "out_for_delivery", "delivered"]
+        },
+        "deliveryAddress": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 300
+        },
+        "trackingNote": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "subscriptionId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "customerName",
+        "customerEmail",
+        "customerPhone",
+        "purchaseMode",
+        "items",
+        "totalAmountNgn",
+        "paystackReference",
+        "paymentStatus",
+        "deliveryStatus",
+        "deliveryAddress",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "PaymentRecord": {
+      "title": "PaymentRecord",
+      "description": "Verified Paystack transaction ledger record and receipt",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "customerEmail": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "customerName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "paystackReference": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "purpose": {
+          "type": "string",
+          "enum": ["buy_now", "installment_start", "installment_contribution", "subscription_renewal"]
+        },
+        "relatedPlanId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "relatedOrderId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "amountNgn": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "enum": ["NGN"]
+        },
+        "channel": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "gatewayStatus": {
+          "type": "string",
+          "enum": ["success"]
+        },
+        "receiptNumber": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 60
+        },
+        "description": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 240
+        },
+        "paidAt": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "customerEmail",
+        "customerName",
+        "paystackReference",
+        "purpose",
+        "amountNgn",
+        "currency",
+        "channel",
+        "gatewayStatus",
+        "receiptNumber",
+        "description",
+        "paidAt",
+        "createdAt"
+      ]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "Monthly recurring food bundle subscription",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "customerName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "customerEmail": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "customerPhone": {
+          "type": "string",
+          "minLength": 7,
+          "maxLength": 30
+        },
+        "productId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "bundleTitle": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 160
+        },
+        "variantLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "imageUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "priceNgn": {
+          "type": "number"
+        },
+        "cadence": {
+          "type": "string",
+          "enum": ["monthly"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "paused", "cancelled"]
+        },
+        "deliveryAddress": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 300
+        },
+        "nextBillingDate": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "lastPaymentReference": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 128
+        },
+        "renewalsCount": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "customerName",
+        "customerEmail",
+        "customerPhone",
+        "productId",
+        "bundleTitle",
+        "variantLabel",
+        "imageUrl",
+        "priceNgn",
+        "cadence",
+        "status",
+        "deliveryAddress",
+        "nextBillingDate",
+        "lastPaymentReference",
+        "renewalsCount",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ReminderLog": {
+      "title": "ReminderLog",
+      "description": "SMS and Email installment reminder dispatch audit log",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "planId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "channel": {
+          "type": "string",
+          "enum": ["sms", "email"]
+        },
+        "frequency": {
+          "type": "string",
+          "enum": ["daily", "weekly", "monthly"]
+        },
+        "recipient": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "status": {
+          "type": "string",
+          "enum": ["sent", "failed", "queued"]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 500
+        },
+        "sentAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "planId",
+        "channel",
+        "frequency",
+        "recipient",
+        "status",
+        "message",
+        "sentAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Publicly readable catalog of Nigerian foodstuffs and ready-made food bundles; admin-only writes"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private customer profile containing PII and reminder opt-ins; restricted to owner and admin"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Admin role directory"
+    },
+    "/installmentPlans/{planId}": {
+      "schema": { "$ref": "#/entities/InstallmentPlan" },
+      "description": "Customer Pay Small Small installment plans"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Verified customer orders and delivery statuses"
+    },
+    "/payments/{paymentId}": {
+      "schema": { "$ref": "#/entities/PaymentRecord" },
+      "description": "Immutable verified Paystack transaction records and receipts"
+    },
+    "/subscriptions/{subscriptionId}": {
+      "schema": { "$ref": "#/entities/Subscription" },
+      "description": "Monthly food bundle subscriptions"
+    },
+    "/reminderLogs/{logId}": {
+      "schema": { "$ref": "#/entities/ReminderLog" },
+      "description": "Automated SMS and email reminder logs"
+    }
+  }
+}

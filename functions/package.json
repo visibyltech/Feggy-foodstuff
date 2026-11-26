@@ -1,0 +1,21 @@
+{
+  "name": "feggy-foodstuff-functions",
+  "version": "1.0.0",
+  "description": "Firebase Cloud Functions for FEGGY FOODSTUFF automated daily, weekly, and monthly Pay Small Small SMS/Email reminders and Paystack webhooks",
+  "main": "lib/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "build": "tsc",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "deploy": "firebase deploy --only functions"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

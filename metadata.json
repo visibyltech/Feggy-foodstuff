@@ -1,0 +1,8 @@
+{
+  "name": "FEGGY FOODSTUFF",
+  "description": "Easy Buy Foodstuff — Nigerian foodstuffs e-commerce platform built around Pay Small Small daily, weekly, and monthly installment plans, Buy Now, and Monthly Food Subscriptions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
